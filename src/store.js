@@ -98,13 +98,27 @@ function makeSeed() {
 // ---- Persistence ----
 function clone(o) { return JSON.parse(JSON.stringify(o)); }
 
+// Strip any parentId that points at a missing institution or would form a cycle, so
+// loaded/imported data can never corrupt the hierarchy (the galaxy walks parentId chains).
+// Mutates and returns `raw`.
+function normalizeParents(raw) {
+  if (!raw || !Array.isArray(raw.institutions)) return raw;
+  const ids = new Set(raw.institutions.map((i) => i.id));
+  raw.institutions.forEach((i) => {
+    if (i.parentId != null && (!ids.has(i.parentId) || wouldCycle(raw.institutions, i.id, i.parentId))) {
+      delete i.parentId;
+    }
+  });
+  return raw;
+}
+
 export function getRaw() {
   if (typeof localStorage !== 'undefined') {
     try {
       const s = localStorage.getItem(KEY);
       if (s) {
         const raw = JSON.parse(s);
-        if (raw && Array.isArray(raw.institutions) && Array.isArray(raw.people) && Array.isArray(raw.edges)) return raw;
+        if (raw && Array.isArray(raw.institutions) && Array.isArray(raw.people) && Array.isArray(raw.edges)) return normalizeParents(raw);
       }
     } catch (_) { /* fall through to seed */ }
   }
@@ -139,7 +153,7 @@ export function importJSON(text) {
   if (!raw || !Array.isArray(raw.institutions) || !Array.isArray(raw.people) || !Array.isArray(raw.edges)) {
     throw new Error('Invalid file: expected { institutions, people, edges }.');
   }
-  return saveRaw(raw);
+  return saveRaw(normalizeParents(raw));
 }
 
 function genId(prefix, existing) {
@@ -169,9 +183,11 @@ export function wouldCycle(institutions, id, parentId) {
 // ---- CRUD (each returns the new raw) ----
 export function upsertInstitution(patch) {
   const raw = getRaw();
-  // Normalise/guard the parent link: empty string clears it; a cycle is rejected.
+  // Normalise/guard the parent link: empty string clears it; an unknown id or a
+  // cycle is rejected (falls back to top-level rather than corrupting the tree).
   const cleanParent = (id, parentId) => {
     if (!parentId) return undefined;
+    if (!raw.institutions.some((i) => i.id === parentId)) return undefined;
     if (wouldCycle(raw.institutions, id, parentId)) return undefined;
     return parentId;
   };
@@ -200,8 +216,9 @@ export function deleteInstitution(id) {
   // Capture the deleted node's parent BEFORE removing it, so we can re-parent its
   // children to the grandparent (don't cascade-delete a whole sub-tree).
   const removed = raw.institutions.find((i) => i.id === id);
-  const grandparent = removed && removed.parentId;
   raw.institutions = raw.institutions.filter((i) => i.id !== id);
+  // Re-parent to the grandparent only if it still exists; otherwise promote to top level.
+  const grandparent = removed && removed.parentId && raw.institutions.some((i) => i.id === removed.parentId) ? removed.parentId : null;
   raw.institutions.forEach((i) => {
     if (i.parentId === id) { if (grandparent) i.parentId = grandparent; else delete i.parentId; }
   });

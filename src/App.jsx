@@ -184,7 +184,7 @@ function InstitutionPanel({ instId, linkInst, onPickLink, onSelectEmployee, onCl
   const others = A.institutions.filter((i) => i.id !== instId);
   const breakdown = A.relBreakdown(instId);
   const crossLinks = A.crossLinksOf(instId).length;
-  const target = linkInst ? A.instById[linkInst] : null;
+  const target = (linkInst && A.instById[linkInst]) || null;   // null-safe if the filtered institution was deleted
   const children = A.childrenOf(instId);   // sub-institutions nested under this one
   const parent = A.parentOf(instId);       // the holding it sits under, if any
 
@@ -335,7 +335,7 @@ function InstitutionPanel({ instId, linkInst, onPickLink, onSelectEmployee, onCl
         h(SectionLabel, { count: employees.length }, 'Key figures'),
         h('div', { style: { display: 'flex', gap: 10, flexWrap: 'wrap' } },
           employees.slice(0, 4).map((p) => {
-            const connected = linkInst ? A.connectsToInst(p.id, linkInst) : false;
+            const connected = target ? A.connectsToInst(p.id, linkInst) : false;
             const dim = linkInst && !connected;
             return h('button', {
               key: p.id, type: 'button', className: 'atlas-figure', onClick: () => onSelectEmployee(p.id),
@@ -359,7 +359,7 @@ function InstitutionPanel({ instId, linkInst, onPickLink, onSelectEmployee, onCl
           hi(A.linkCountBetween(instId, linkInst)), ' of ' + employees.length + ' connect to ' + target.name) : null,
         h('div', { style: { display: 'flex', flexDirection: 'column' } },
           employees.map((p) => {
-            const connected = linkInst ? A.connectsToInst(p.id, linkInst) : false;
+            const connected = target ? A.connectsToInst(p.id, linkInst) : false;
             const dimRow = linkInst && !connected;
             const deg = degreeOf(p.id);
             return h('button', {

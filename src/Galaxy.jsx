@@ -243,6 +243,7 @@ const Galaxy = React.forwardRef(function Galaxy({ focusId, onFocus, isolatedId, 
   // so labels stay upright. Pauses while dragging or hovering a body, and respects reduce-motion.
   React.useEffect(() => {
     if (!dive3d || REDUCED) return;
+    spinPausedRef.current = false;   // clear any pause left over from a body unmounted mid-hover
     let raf = 0, last = null;
     const SPEED = 4.2; // degrees per second
     const tick = (t) => {
