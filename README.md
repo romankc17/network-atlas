@@ -6,11 +6,23 @@ Vite + React app.
 
 ## Run it
 
+### Prerequisites
+- **Node.js** 16+ and npm installed
+
+### Development
+
 ```bash
-npm install
-npm run dev        # dev server with HMR  → http://localhost:8753
-npm run build      # production build      → dist/
-npm run preview    # serve the production build to check it
+npm install                # install dependencies
+npm run dev                # start dev server with HMR → http://localhost:8753
+```
+
+The dev server will automatically open your browser. Hot module replacement (HMR) means changes to your code reflect instantly without a full page reload.
+
+### Production
+
+```bash
+npm run build              # create optimized production build → dist/
+npm run preview            # serve the production build locally to test it
 ```
 
 ## How it's wired
