@@ -1,0 +1,80 @@
+/* Network Atlas — Color system
+ * An investigative intelligence console: near-black forensic space, calm not
+ * flashy. Colour carries meaning — institutions own a signature hue; edges are
+ * coded by relationship type. */
+:root {
+  /* ---- Space / surfaces (near-black, cool) ---- */
+  --space-void: #06080f;       /* the galaxy backdrop */
+  --space-abyss: #080b15;      /* deepest panel wells */
+  --space-deep: #0b0f1c;       /* floating panels */
+  --space-surface: #0f1424;    /* cards, list rows */
+  --space-raised: #161d31;     /* hover / raised rows */
+  --space-overlay: #1c2438;    /* menus, popovers */
+
+  /* ---- Hairlines & dividers (cool, low-alpha) ---- */
+  --line-faint: rgba(150, 170, 210, 0.07);
+  --line-soft: rgba(150, 170, 210, 0.12);
+  --line-strong: rgba(150, 170, 210, 0.20);
+  --line-bright: rgba(180, 200, 240, 0.34);
+
+  /* ---- Ink / text ---- */
+  --ink-1: #e9edf7;            /* primary text, names */
+  --ink-2: #aeb7cd;            /* secondary text */
+  --ink-3: #727c96;            /* muted / captions */
+  --ink-4: #49506688;          /* faint / disabled / placeholder */
+  --ink-on-accent: #04121a;    /* text on bright accent fills */
+
+  /* ---- Signal / interactive accent (scan cyan) ---- */
+  --signal: #46cfe6;
+  --signal-bright: #6fe0f3;
+  --signal-dim: #2a8fa3;
+  --signal-glow: rgba(70, 207, 230, 0.45);
+  --signal-wash: rgba(70, 207, 230, 0.10);
+
+  /* ---- Relationship edge colours (legend) ---- */
+  --rel-colleague: #5a6480;        /* dim slate */
+  --rel-former: #8b7bef;           /* violet */
+  --rel-family: #e0566b;           /* coral */
+  --rel-business: #f2a13c;         /* amber */
+  --rel-financial: #5fcf7a;        /* green */
+
+  /* ---- Institution signature palette ----
+   * Each institution owns one hue: used for its anchor core, its people, and
+   * its tethers. Luminous on near-black, distinct from each other. */
+  --inst-gold:    #d8b24a;   /* government */
+  --inst-emerald: #3fb98f;   /* bank / finance */
+  --inst-amber:   #e08a3c;   /* construction */
+  --inst-azure:   #5b8def;   /* media */
+  --inst-rose:    #e36a9a;   /* NGO / foundation */
+  --inst-violet:  #9b86f0;   /* university */
+  --inst-cyan:    #43cec4;   /* holding company */
+  --inst-slate:   #8893ad;   /* unclassified / neutral */
+
+  /* ---- Status ---- */
+  --status-live: #5fcf7a;
+  --status-warn: #f2a13c;
+  --status-alert: #e0566b;
+  --status-stale: #727c96;
+
+  /* ---- Semantic aliases (use these in components) ---- */
+  --bg-app: var(--space-void);
+  --bg-panel: var(--space-deep);
+  --bg-card: var(--space-surface);
+  --bg-card-hover: var(--space-raised);
+  --bg-input: #0a0e1aE6;
+  --bg-overlay: var(--space-overlay);
+
+  --text-primary: var(--ink-1);
+  --text-secondary: var(--ink-2);
+  --text-muted: var(--ink-3);
+  --text-faint: var(--ink-4);
+  --text-mono: var(--ink-2);
+
+  --border-card: var(--line-soft);
+  --border-input: var(--line-strong);
+  --border-focus: var(--signal);
+
+  --accent: var(--signal);
+  --accent-text: var(--signal-bright);
+  --accent-fill: var(--signal);
+}

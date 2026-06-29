@@ -1,0 +1,31 @@
+/* Network Atlas — Effects: shadows, glows, blur, motion
+ * Light in this product is signal. Glows mark live/selected things; shadows lift
+ * floating panels off the galaxy. Restrained, never decorative. */
+:root {
+  /* ---- Elevation shadows (cast onto near-black) ---- */
+  --shadow-panel: 0 24px 64px -24px rgba(0, 0, 0, 0.86), 0 2px 8px rgba(0, 0, 0, 0.5);
+  --shadow-card: 0 8px 28px -16px rgba(0, 0, 0, 0.7);
+  --shadow-popover: 0 16px 40px -16px rgba(0, 0, 0, 0.8);
+  --shadow-rim: inset 0 1px 0 rgba(180, 200, 240, 0.06);
+
+  /* ---- Glows (institution / signal light bleed) ---- */
+  --glow-signal: 0 0 0 1px var(--signal-glow), 0 0 18px -2px var(--signal-glow); /* @kind shadow */
+  --glow-node-sm: 0 0 8px -1px currentColor; /* @kind shadow */
+  --glow-node-md: 0 0 16px -2px currentColor, 0 0 4px currentColor; /* @kind shadow */
+  --glow-core: 0 0 28px -4px currentColor, 0 0 8px -1px currentColor; /* @kind shadow */
+
+  /* ---- Glass / scrim ---- */
+  --blur-panel: blur(18px) saturate(125%); /* @kind other */
+  --blur-chip: blur(10px); /* @kind other */
+  --scrim-galaxy: radial-gradient(120% 120% at 70% 18%, transparent 40%, rgba(4, 6, 12, 0.55) 100%); /* @kind other */
+  --scrim-focus: rgba(6, 8, 15, 0.62); /* @kind color */
+
+  /* ---- Motion ---- */
+  --ease-dive: cubic-bezier(0.22, 1, 0.36, 1); /* @kind other */
+  --ease-out: cubic-bezier(0.16, 1, 0.3, 1); /* @kind other */
+  --ease-inout: cubic-bezier(0.65, 0, 0.35, 1); /* @kind other */
+  --dur-hover: 140ms; /* @kind other */
+  --dur-panel: 320ms; /* @kind other */
+  --dur-dive: 620ms; /* @kind other */
+  --dur-drift: 24s; /* @kind other */
+}

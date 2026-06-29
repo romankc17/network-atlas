@@ -1,0 +1,6 @@
+/* Network Atlas — Webfonts
+ * Grotesque sans for UI + names; monospace for IDs / numbers / metadata.
+ * NOTE: loaded from Google Fonts CDN (sandbox cannot fetch binaries to vendor
+ * them locally). To ship self-hosted, drop .woff2 files in assets/fonts/ and
+ * replace this @import with @font-face rules. See readme.md > Caveats. */
+@import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=Space+Mono:ital,wght@0,400;0,700;1,400&display=swap');
